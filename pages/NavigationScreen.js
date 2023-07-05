@@ -2,6 +2,8 @@ import React from "react";
 import { useRoute } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import ChooseLender from "./ChooseLender";
 import LenderPage from "./LenderPage";
 import Inbox from "./Inbox";
@@ -9,13 +11,29 @@ import BorrowerPage from "./BorrowerPage";
 import BuySell from "./BuySell";
 import HowMuchBorrow from "./HowMuchBorrow";
 
-const Tab = createBottomTabNavigator();
-
 const HowMuchBorrowScreen = "Lend";
 const BorrowerPageScreen = "BorrowerPage";
 const InboxScreen = "Inbox";
-const ChooseLenderScreen = "Lend";
 const BuySellScreen = "BuySell";
+
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function StackScreen() { 
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="HowMuchBorrow"
+        component={HowMuchBorrow}
+      />
+      <Stack.Screen 
+        options={{ headerShown: false }}  
+        name="ChooseLender" 
+        component={ChooseLender} />
+    </Stack.Navigator>
+  );
+}
 
 const NavigationScreen = () => {
   const route = useRoute();
@@ -23,7 +41,7 @@ const NavigationScreen = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName={BorrowerPage}
+      initialRouteName={BorrowerPageScreen}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -32,7 +50,7 @@ const NavigationScreen = () => {
             iconName = focused ? "home" : "home";
           } else if (rn === InboxScreen) {
             iconName = focused ? "chatbox-ellipses-outline" : "chatbox-ellipses-outline";
-          } else if (rn === HowMuchBorrow || rn == "Lend") {
+          } else if (rn === HowMuchBorrowScreen || rn == "Lend") {
             iconName = focused ? "cash-outline" : "cash-outline";
           } else if (rn === BuySellScreen || rn === "Buy/Sell") {
             iconName = focused ? "people-outline" : "people-outline";
@@ -41,7 +59,7 @@ const NavigationScreen = () => {
           return <Ionicons name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: "#004479",
-        inactiveTintColor: "grey",
+        tabBarInactiveTintColor: "grey",
       })}
     >
       <Tab.Screen
@@ -57,7 +75,7 @@ const NavigationScreen = () => {
       <Tab.Screen
         options={{ headerShown: false }}
         name="Lend"
-        component={HowMuchBorrow}
+        component={StackScreen}
       />
       <Tab.Screen
         options={{ headerShown: false }}

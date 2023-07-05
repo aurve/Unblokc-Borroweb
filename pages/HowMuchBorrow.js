@@ -1,10 +1,8 @@
-import { ScrollView, StyleSheet, Text, View, SafeAreaSafeAreaView, TouchableWithoutFeedback, Keyboard, TextInput, Button, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView, StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard, TextInput, Button, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import ChooseLender from "./ChooseLender";
 
 //How Much Are You Going to Borrow????
 const DismissKeyboard = ({children}) => (
@@ -13,9 +11,7 @@ const DismissKeyboard = ({children}) => (
   </TouchableWithoutFeedback>
 )
 
-export default function HowMuchBorrow() {
-  const navigation = useNavigation();
-  const route = useRoute();
+const HowMuchBorrow = ({navigation}) => {
   return (
     
     <ScrollView style={{paddingTop: 50, backgroundColor: "#fff",}}>
@@ -30,7 +26,7 @@ export default function HowMuchBorrow() {
       </View>
       </DismissKeyboard>
       <View style={styles.button}>
-      <TouchableOpacity onPress={() => navigation.navigate(ChooseLender)}>
+      <TouchableOpacity onPress={() => navigation.navigate('ChooseLender')}>
         <Text style={styles.buttonText}>Proceed</Text>
       </TouchableOpacity>
       </View>
@@ -100,3 +96,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+export default HowMuchBorrow;
